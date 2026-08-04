@@ -1,11 +1,30 @@
+using ABC_Inc_Project_CLD7112.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Configuration.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
+builder.Services.AddSingleton<IBlobStorageService, BlobStorageService>();
+builder.Services.AddSingleton<IFileStorageService, FileStorageService>();
+builder.Services.AddSingleton<ITableStorageService, TableStorageService>();
+builder.Services.AddSingleton<IQueueStorageService, QueueStorageService>();
+
+// External APIs used to source mock data for the Development-only seeding feature.
+builder.Services.AddHttpClient("RandomUser", client =>
+{
+    client.BaseAddress = new Uri("https://randomuser.me/");
+});
+builder.Services.AddHttpClient("DummyJson", client =>
+{
+    client.BaseAddress = new Uri("https://dummyjson.com/");
+});
+builder.Services.AddScoped<ISeedDataService, SeedDataService>();
+
 var app = builder.Build();
 
-builder.Configuration.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

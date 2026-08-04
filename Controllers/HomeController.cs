@@ -1,5 +1,5 @@
-using ABC_Inc_Project_CLD7112.Models;
 using Microsoft.AspNetCore.Mvc;
+using ABC_Inc_Project_CLD7112.Models;
 using System.Diagnostics;
 
 namespace ABC_Inc_Project_CLD7112.Controllers

@@ -1,0 +1,33 @@
+@model IEnumerable<ABC_Inc_Project_CLD7112.Models.Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Product</a>
+</p>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" style="height:180px;object-fit:cover;" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@product.ProductName</h5>
+                    <p class="card-text text-muted mb-1">@product.ProductCategory</p>
+                    <p class="card-text">@product.StockPrice.ToString("0.00") &middot; @product.StockQuantity in stock</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a asp-action="Edit" asp-route-rowKey="@product.RowKey" class="btn btn-sm btn-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-rowKey="@product.RowKey" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
