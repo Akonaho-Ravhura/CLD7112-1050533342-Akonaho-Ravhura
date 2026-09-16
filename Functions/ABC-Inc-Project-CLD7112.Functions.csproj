@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- net8.0 (LTS): the GA-supported, fully-tooled target for Azure Functions today, and it
+         works on every hosting plan including Linux Consumption. It now references the Shared
+         class library (also net8.0) instead of the web app directly, so there's no framework
+         mismatch. -->
+    <TargetFramework>net8.0</TargetFramework>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ABC_Inc_Project_CLD7112.Functions</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Needed because this is a Microsoft.NET.Sdk (Worker) project, not Microsoft.NET.Sdk.Web,
+         so the ASP.NET Core types (HttpRequest, IActionResult, etc.) used below aren't
+         referenced automatically. -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.18.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reuses the Services/Models already built for the web app (ITableStorageService,
+         IBlobStorageService, IQueueStorageService, IFileStorageService, CustomerProfile,
+         OrderMessage, etc.) via the shared class library, instead of duplicating them. -->
+    <ProjectReference Include="..\Shared\ABC-Inc-Project-CLD7112.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

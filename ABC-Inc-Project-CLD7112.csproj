@@ -8,10 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Data.Tables" Version="12.11.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
-    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.27.1" />
-    <PackageReference Include="Azure.Storage.Queues" Version="12.27.1" />
+    <!-- Table/Blob/Queue/File Storage service implementations now live in the Shared project
+         and are pulled in transitively through the ProjectReference below, so the Azure.*
+         packages don't need to be declared here directly anymore. -->
+    <ProjectReference Include="Shared\ABC-Inc-Project-CLD7112.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The Functions and Shared projects live in subfolders of this project's directory but
+         are separate, self-contained projects with their own .csproj files. Without these
+         excludes, this project's default file globbing would also try to compile their files
+         directly, causing build errors (duplicate types / missing package references). -->
+    <Compile Remove="Functions\**" />
+    <Content Remove="Functions\**" />
+    <EmbeddedResource Remove="Functions\**" />
+    <None Remove="Functions\**" />
+    <Compile Remove="Shared\**" />
+    <Content Remove="Shared\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <None Remove="Shared\**" />
   </ItemGroup>
 
 </Project>

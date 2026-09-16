@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Azure.Data.Tables;
+using Microsoft.Extensions.Configuration;
 
 namespace ABC_Inc_Project_CLD7112.Services
 {

@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ABC_Inc_Project_CLD7112.Services
 {

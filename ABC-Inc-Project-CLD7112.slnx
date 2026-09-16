@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="ABC-Inc-Project-CLD7112.csproj" />
+  <Project Path="Functions\ABC-Inc-Project-CLD7112.Functions.csproj" />
+  <Project Path="Shared\ABC-Inc-Project-CLD7112.Shared.csproj" />
 </Solution>
