@@ -33,7 +33,10 @@
     <None Include="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="local.settings.json">
+    <!-- Condition guards this: local.settings.json is gitignored (it holds the real storage
+         connection string) so it won't exist on a fresh CI checkout. Without the condition,
+         CI builds fail trying to copy a file that was never committed on purpose. -->
+    <None Include="local.settings.json" Condition="Exists('local.settings.json')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
