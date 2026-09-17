@@ -11,9 +11,13 @@ namespace ABC_Inc_Project_CLD7112.Functions
     // POST /api/transactions  -> write a transaction message onto the queue
     //                            body: { "orderId": "...", "status": "Pending" }
     // GET  /api/transactions  -> read (and remove) the next transaction message off the queue
+    //
+    // Uses the same "order-processing" queue the website's OrderController already writes to
+    // (on order placement and status changes), so this function reads real messages produced
+    // by the site rather than a separate, disconnected queue.
     public class QueueStorageFunction
     {
-        private const string QueueName = "transactions";
+        private const string QueueName = "order-processing";
 
         private readonly IQueueStorageService _queueStorageService;
         private readonly ILogger<QueueStorageFunction> _logger;
